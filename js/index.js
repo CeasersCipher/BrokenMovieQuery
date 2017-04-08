@@ -1,4 +1,4 @@
-//console.log($.getJSON("https://api.themoviedb.org/3/discover/movie?api_key=4019eb7302645acdfeebbf334befe0e0"));
+//console.log($.getJSON("https://api.themoviedb.org/3/discover/movie?api_key="));
 
 
 $('#term').focus(function(){
@@ -20,12 +20,12 @@ $('#term').focus(function(){
 
             $('#poster').html('<div class="alert"><strong>Loading...</strong></div>');
 
-            $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=4019eb7302645acdfeebbf334befe0e0&query=" + film + "&callback=?", function(json) {
+            $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=***&query=" + film + "&callback=?", function(json) {
                if (json != "Nothing found."){
 
                      $('#poster').html('<p>Your search found: <strong>' + json.results[0].title + '</strong></p><img src=\"http://image.tmdb.org/t/p/w500/' + json.results[0].poster_path + '\" class=\"img-responsive\" >');
                   } else {
-                     $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=4019eb7302645acdfeebbf334befe0e0&query=inception&callback=?", function(json) {
+                     $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=***&query=inception&callback=?", function(json) {
 
                        console.log(json);
                         $('#poster').html('<div class="alert"><p>NOTHING FOUND HERE.</p></div><p>Inception the inception the inception</p><img id="thePoster" src="http://image.tmdb.org/t/p/w500/' + json[0].poster_path + ' class="img-responsive" />');
