@@ -1,0 +1,21 @@
+* {
+  text-align: center;
+  font-family: "birra-2";
+}
+.container {
+  top: 2em;
+  background-color: #E5FCC2;}
+.colored{
+  color: #594F4F;
+}
+#search {
+  font-family: "giddyup-std";
+  border-radius: 20px;
+  
+}
+
+btn-primary {
+  background-color: #594F4F;
+  color: #547980;
+}
+
