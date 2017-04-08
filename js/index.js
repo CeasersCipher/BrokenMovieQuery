@@ -1,51 +1,46 @@
-// jQuery //
-
-$(document).ready(function(){
-  //remove validation message if no image
-  $('#term').focus(function(){
-    var full = $("#poster").has('img').length ? true : false;
-    if(full == false){
-      $('#poster').empty();
-    }
-  });
-});
-
-// IMPORTANT SHIT //
-// HOW TO PULL FROM FORM VIA ID //
-
-var getPoster = function() {
-
-  //grab movie title & store as variable
-  var film = $('#term').val();
-
-  //form validation (if nothing enter)
-  if(film == ''){
-    //diplay message
-    $('#poster').html("<h2 class='loading'>Forgot to enter titlez.</h2>");
-  } else {
-    //something was entered
-    $('#poster').html("<h2 class='load'>Stand-by Calling The Internet</h2>");
-
-    $.getJSON("http://api.themoviedb.org/2.1/Movie.search/en/json/4019eb7302645acdfeebbf334befe0e0/" + film + "?callback=?", function(json) {
-      if (json != 'Nothing found.'){
-        $('#poster').html('<h2 class="loading">Ou La la...</h2><img id="thePoster"  src=' + json[0].posters[0].image.url + ' />');
-
-      } else {
-        $.getJSON("http://api.themoviedb.org/2.1/Movie.search/en/json/4019eb7302645acdfeebbf334befe0e0/oceans-11?callback=?", function(json) {
-          console.log(json);
-          $('#poster').html('<h2 class="loading">Nothing Found, keep on heisting!</h2><img id="thePoster" src=' + json[0].posters[0].image.url + ' /> ');
-        });
+//console.log($.getJSON("https://api.themoviedb.org/3/discover/movie?api_key=4019eb7302645acdfeebbf334befe0e0"));
 
 
-
+$('#term').focus(function(){
+      var full = $("#poster").has("img").length ? true : false;
+      if(full == false){
+         $('#poster').empty();
       }
-    });
-  }
+   });
 
-      return false;
-}
+   var getPoster = function(){
 
-$('#search').click(getPoster);
-$('#term').keyup(function(event) {
-  if(event.keyCode == 13){getPoster();}
-});
+        var film = $('#term').val();
+
+         if(film == ''){
+
+            $('#poster').html('<div class="alert"><strong>Oops!</strong> Try adding something into the search field.</div>');
+
+         } else {
+
+            $('#poster').html('<div class="alert"><strong>Loading...</strong></div>');
+
+            $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=4019eb7302645acdfeebbf334befe0e0&query=" + film + "&callback=?", function(json) {
+               if (json != "Nothing found."){
+
+                     $('#poster').html('<p>Your search found: <strong>' + json.results[0].title + '</strong></p><img src=\"http://image.tmdb.org/t/p/w500/' + json.results[0].poster_path + '\" class=\"img-responsive\" >');
+                  } else {
+                     $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=4019eb7302645acdfeebbf334befe0e0&query=inception&callback=?", function(json) {
+
+                       console.log(json);
+                        $('#poster').html('<div class="alert"><p>NOTHING FOUND HERE.</p></div><p>Inception the inception the inception</p><img id="thePoster" src="http://image.tmdb.org/t/p/w500/' + json[0].poster_path + ' class="img-responsive" />');
+                     });
+                  }
+             });
+
+          }
+
+        return false;
+   }
+
+   $('#search').click(getPoster);
+   $('#term').keyup(function(event){
+       if(event.keyCode == 13){
+           getPoster();
+       }
+   });
